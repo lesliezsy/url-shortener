@@ -37,9 +37,6 @@ app.post('/', async (req, res) => {
           shortenUrl: shortUrl
         }).lean()
   
-        console.log("查詢亂數是否重複結果： ", result);
-        console.log("沒紀錄，新生成的url: ", shortUrl);
-
         // 若 result.length === 0 代表沒重複，可以停止迴圈
         // 若 result.length !== 0 代表重複，繼續迴圈
         if(result.length === 0) break
