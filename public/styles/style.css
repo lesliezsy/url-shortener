@@ -1,0 +1,40 @@
+body {
+  font-family: 'Jaldi', sans-serif;
+  background-color: #FAFAFA;
+}
+
+/* .navbar {
+  background-color: #083958;
+} */
+
+.navbar .navbar-brand {
+  font-family: 'Comfortaa', cursive;
+  color: #083958;
+  font-size: 1.2rem;
+}
+
+.navbar .navbar-brand:hover {
+  color: #627E90;
+}
+
+.btn-secondary {
+  background-color: #627E90;
+}
+
+.btn-secondary:hover {
+  background-color: #4e738b;
+}
+
+.feedback-text {
+  font-size: .9rem !important;
+}
+
+.input-border-left {
+  border-top-left-radius: .7em;
+  border-bottom-left-radius: .7em;
+}
+
+.btn-border-right {
+  border-top-right-radius: .7em;
+  border-bottom-right-radius: .7em;
+}

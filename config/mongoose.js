@@ -1,5 +1,5 @@
 const mongoose = require('mongoose') 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/record' // record是指本地的資料庫名稱
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/url-shortener' // url-shortener指本地的資料庫名稱
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 

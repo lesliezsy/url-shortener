@@ -1,0 +1,63 @@
+<div class="container my-4">
+  <div class="row d-flex justify-content-center">
+    <div class="col-8">
+
+      <form class="needs-validation" novalidate action="/" method="POST">
+        <div class="input-group mb-3">
+          <input type="url" class="form-control input-border-left" placeholder="https://www.xxxx.com" name="url"
+            value="{{url}}" required>
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-secondary"
+              style="border-top-right-radius: .7em; border-bottom-right-radius: .7em;">Shorten</button>
+          </div>
+          <div class="invalid-feedback feedback-text pl-1">
+            Please enter your link. The format should be like this: https://www.xxxx.com
+          </div>
+        </div>
+      </form>
+
+      <span class="ml-1">Short links:</span>
+      <div class="input-group mb-3">
+        <input type="url" class="form-control input-border-left" name="shortUrl" value="{{shortUrl}}" id="shortUrl">
+        <div class="input-group-append">
+          <button class="btn btn-secondary pr-3 btn-border-right" onclick="copyUrl()">Copy</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Disabling form submissions if there are invalid fields 防止送出無效原始連結
+  (function () {
+    'use strict'
+    let forms = document.querySelectorAll('.needs-validation')
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+
+  function copyUrl() {
+    // Get the text field 
+    let copyText = document.getElementById("shortUrl");
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    document.execCommand("copy");
+
+    // Alert the copy result
+    alert("URL has been copied successfully ヽ(●´∀`●)ﾉ");
+  }
+</script>
