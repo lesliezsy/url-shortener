@@ -23,18 +23,16 @@ app.post('/', async (req, res) => {
   try {
     // 先查url在db是否有紀錄，若有就直接帶出資料，防止重複生成不必要的網址組合
     const result = await ShortUrl.find({ originalUrl: url }).lean()
-    console.log("查url在db是否有紀錄: ", result);
 
     if (result.length !== 0) {
 
-      shortUrl = result[0]['shortenUrl']
-      console.log("既有的shortUrl: ", shortUrl);
+      shortUrl = `https://ls-url-shortener.herokuapp.com/${result[0]['shortenUrl']}`
 
     } else {
       // 若db沒資料，則生成生成專屬亂數5碼; 檢查亂數是否重複，沒才使用
       do {
         shortUrl = generateUrl()
-  
+
         const result = await ShortUrl.find({
           shortenUrl: shortUrl
         }).lean()
