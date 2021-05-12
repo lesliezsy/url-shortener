@@ -29,7 +29,7 @@ app.post('/', async (req, res) => {
       shortUrl = `https://ls-url-shortener.herokuapp.com/${result[0]['shortenUrl']}`
 
     } else {
-      // 若db沒資料，則生成生成專屬亂數5碼; 檢查亂數是否重複，沒才使用
+      // 若db沒資料，則生成專屬亂數5碼; 檢查亂數是否重複，沒才使用
       do {
         shortUrl = generateUrl()
 
