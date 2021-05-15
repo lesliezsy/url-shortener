@@ -12,6 +12,8 @@ app.use(express.static('public')) // 如果會用到靜態資料夾 public
 require('./config/mongoose')
 const ShortUrl = require('./models/shortURL') // 載入shortURL model, 使用mongoose提供的data schema, 方便建立db資料，並access相關資料
 
+require('dotenv').config()
+const baseUrl = process.env.baseUrl || `http://localhost:${PORT}/`
 
 app.get('/', (req, res) => {
   res.render('index')
@@ -25,7 +27,7 @@ app.post('/', async (req, res) => {
     // 先查url在db是否有紀錄，若有就直接帶出資料，防止重複生成不必要的網址組合
     const result = await ShortUrl.findOne({ originalUrl: url }).lean()
 
-    console.log(result);
+    // console.log(result);
 
     if (result !==null) { // !==null
 
