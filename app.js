@@ -12,8 +12,6 @@ app.use(express.static('public')) // 如果會用到靜態資料夾 public
 require('./config/mongoose')
 const ShortUrl = require('./models/shortURL') // 載入shortURL model, 使用mongoose提供的data schema, 方便建立db資料，並access相關資料
 
-require('dotenv').config()
-const BaseUrl = process.env.BaseUrl || `http://localhost:${PORT}/`
 
 app.get('/', (req, res) => {
   res.render('index')
@@ -31,7 +29,7 @@ app.post('/', async (req, res) => {
 
     if (result !==null) { // !==null
 
-      shortenUrl = `${BaseUrl}${result.shortenUrl}`
+      shortenUrl = `${baseUrl}${result.shortenUrl}`
 
     } else {
       // 若db沒資料，則生成專屬亂數5碼; 檢查亂數是否重複，沒才使用
@@ -54,7 +52,7 @@ app.post('/', async (req, res) => {
         shortenUrl
       })
 
-      shortenUrl = `${BaseUrl}${shortenUrl}`
+      shortenUrl = `${baseUrl}${shortenUrl}`
 
     }
 
