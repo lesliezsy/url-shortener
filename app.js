@@ -18,44 +18,44 @@ app.get('/', (req, res) => {
 
 app.post('/', async (req, res) => {
   const { url } = req.body
-  let shortUrl = ''
+  let shortenUrl = ''
 
   try {
     // 先查url在db是否有紀錄，若有就直接帶出資料，防止重複生成不必要的網址組合
-    const result = await ShortUrl.find({ originalUrl: url }).lean()
+    const result = await ShortUrl.findOne({ originalUrl: url }).lean()
 
-    if (result.length !== 0) {
+    // console.log(result);
 
-      shortUrl = `https://ls-url-shortener.herokuapp.com/${result[0]['shortenUrl']}`
+    if (result !==null) { // !==null
+
+      shortenUrl = `https://ls-url-shortener.herokuapp.com/${result.shortenUrl}`
 
     } else {
       // 若db沒資料，則生成專屬亂數5碼; 檢查亂數是否重複，沒才使用
       do {
-        shortUrl = generateUrl()
-
-        const result = await ShortUrl.find({
-          shortenUrl: shortUrl
+        shortenUrl = generateUrl()
+        const result = await ShortUrl.findOne({
+          shortenUrl
         }).lean()
-  
-        // 若 result.length === 0 代表沒重複，可以停止迴圈
-        // 若 result.length !== 0 代表重複，繼續迴圈
-        if(result.length === 0) break
+        // 若 result === null 代表沒重複，可以停止迴圈
+        // 若 result !== null 代表重複，繼續迴圈
+        if(result === null) break
 
-      } while(result.length !== 0)
+      } while(result !== null)
 
-      console.log("沒紀錄，新生成的url: ", shortUrl);
+      // console.log("沒紀錄，新生成的url: ", shortenUrl);
      
       // 並在db建一筆資料
       ShortUrl.create({
         originalUrl: url,
-        shortenUrl: shortUrl
+        shortenUrl
       })
 
-      shortUrl = `https://ls-url-shortener.herokuapp.com/${shortUrl}`
+      shortenUrl = `https://ls-url-shortener.herokuapp.com/${shortenUrl}`
 
     }
 
-    res.render('index', { url, shortUrl })
+    res.render('index', { url, shortenUrl })
 
   } catch (err) {
     console.log(err)
@@ -65,11 +65,11 @@ app.post('/', async (req, res) => {
 
 app.get('/:shortenUrl', async (req, res) => {
   try {
-    const result = await ShortUrl.find({ shortenUrl: req.params.shortenUrl }).lean()
+    const result = await ShortUrl.findOne({ shortenUrl: req.params.shortenUrl }).lean()
     
     // if type wrong url
-    if(result.length === 0) return res.status(404).send(" Sorry, this URL doesn't exist! ")
-    const [{ originalUrl }] = result
+    if(result === null) return res.status(404).send(" Sorry, this URL doesn't exist! ")
+    const { originalUrl } = result
     return res.redirect(originalUrl)
 
   } catch (err) {
