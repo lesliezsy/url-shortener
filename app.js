@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 app.post('/', async (req, res) => {
   const { url } = req.body
-  let shortenUrl = ''
+  let shortUrl = ''
 
   try {
     // 先查url在db是否有紀錄，若有就直接帶出資料，防止重複生成不必要的網址組合
@@ -29,16 +29,16 @@ app.post('/', async (req, res) => {
 
     // console.log(result);
 
-    if (result !==null) { // !==null
+    if (result !== null) { // !==null
 
-      shortenUrl = `${baseUrl}${result.shortenUrl}`
+      shortUrl = `${baseUrl}${result.shortenUrl}`
 
     } else {
       // 若db沒資料，則生成專屬亂數5碼; 檢查亂數是否重複，沒才使用
       do {
-        shortenUrl = generateUrl()
+        shortUrl = generateUrl()
         const result = await ShortUrl.findOne({
-          shortenUrl
+          shortUrl
         }).lean()
         // 若 result === null 代表沒重複，可以停止迴圈
         // 若 result !== null 代表重複，繼續迴圈
@@ -51,14 +51,14 @@ app.post('/', async (req, res) => {
       // 並在db建一筆資料
       ShortUrl.create({
         originalUrl: url,
-        shortenUrl
+        shortenUrl: shortUrl
       })
 
-      shortenUrl = `${baseUrl}${shortenUrl}`
+      shortUrl = `${baseUrl}${shortUrl}`
 
     }
 
-    res.render('index', { url, shortenUrl })
+    res.render('index', { url, shortUrl })
 
   } catch (err) {
     console.log(err)

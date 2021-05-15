@@ -18,7 +18,7 @@
 
       <span class="ml-1">Shortened link:</span>
       <div class="input-group mb-3">
-        <input type="url" class="form-control input-border-left" name="shortenUrl" value="{{shortenUrl}}" id="shortenUrl">
+        <input type="url" class="form-control input-border-left" name="shortUrl" value="{{shortUrl}}" id="shortUrl">
         <div class="input-group-append">
           <button class="btn btn-secondary pr-3 btn-border-right" onclick="copyUrl()">Copy</button>
         </div>
@@ -48,7 +48,7 @@
 
   function copyUrl() {
     // Get the text field 
-    let copyText = document.getElementById("shortenUrl");
+    let copyText = document.getElementById("shortUrl");
 
     // Select the text field
     copyText.select();
